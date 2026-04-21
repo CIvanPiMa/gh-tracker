@@ -6,12 +6,14 @@ How to decide who handles what.
 
 | Work Type | Route To | Examples |
 |-----------|----------|----------|
-| {domain 1} | {Name} | {example tasks} |
-| {domain 2} | {Name} | {example tasks} |
-| {domain 3} | {Name} | {example tasks} |
-| Code review | {Name} | Review PRs, check quality, suggest improvements |
-| Testing | {Name} | Write tests, find edge cases, verify fixes |
-| Scope & priorities | {Name} | What to build next, trade-offs, decisions |
+| Architecture, decisions, code review | Mikey | Design reviews, PR approvals, trade-off analysis |
+| Angular components, UI, SCSS, i18n | Brand | New components, style fixes, UX improvements |
+| JSON data, game model, build scripts, Docker | Data | Edition data, `scripts/`, TypeScript model classes |
+| Tests, QA, edge cases, regression | Chunk | Unit tests, test coverage, bug verification |
+| Documentation, README, guides, API docs | Mouth | README updates, `/docs/`, contributing guides |
+| Code review | Mikey | Review PRs, check quality, suggest improvements |
+| Testing | Chunk | Write tests, find edge cases, verify fixes |
+| Scope & priorities | Mikey | What to build next, trade-offs, decisions |
 | Session logging | Scribe | Automatic — never needs routing |
 
 ## Issue Routing
