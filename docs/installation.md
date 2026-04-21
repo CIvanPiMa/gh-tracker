@@ -2,6 +2,22 @@
 
 This guide covers all ways to install or deploy GH Tracker.
 
+**Table of Contents**:
+
+- [Prerequisites](#prerequisites)
+- [Development Setup](#development-setup)
+  - [Docker (dev mode)](#docker-dev-mode)
+- [Production Build](#production-build)
+- [Docker](#docker)
+  - [Production (Docker Compose)](#production-docker-compose)
+  - [Development (Docker Compose)](#development-docker-compose)
+  - [Standalone Docker](#standalone-docker)
+- [Self-Hosting](#self-hosting)
+- [PWA (Install as App)](#pwa-install-as-app)
+- [Electron (Standalone Desktop App)](#electron-standalone-desktop-app)
+- [Environment Configuration](#environment-configuration)
+  - [Disabling upstream branding](#disabling-upstream-branding)
+
 ---
 
 ## Prerequisites
@@ -58,12 +74,12 @@ docker compose -f docker-compose.dev.yaml up -d
 npm run build
 ```
 
-The `prebuild` hook runs `build-data.js` and `pre-build.js` automatically. The output is placed in `./dist/gloomhavensecretariat/`.
+The `prebuild` hook runs `build-data.js` and `pre-build.js` automatically. The output is placed in `./dist/gh-tracker/`.
 
 To serve the build locally for testing:
 
 ```bash
-npx serve ./dist/gloomhavensecretariat
+npx serve ./dist/gh-tracker
 ```
 
 > The default production build sets the base URL to `/`. To use a different base path (e.g. for hosting at `example.com/gh-tracker/`), pass `--base-href`:
@@ -93,8 +109,8 @@ docker compose -f docker-compose.dev.yaml up -d
 ### Standalone Docker
 
 ```bash
-docker pull gloomhavensecretariat/ghs
-docker run --rm -p 80:80 --name ghs gloomhavensecretariat/ghs
+docker pull gh-tracker/ghs
+docker run --rm -p 80:80 --name ghs gh-tracker/ghs
 ```
 
 ---
@@ -103,11 +119,11 @@ docker run --rm -p 80:80 --name ghs gloomhavensecretariat/ghs
 
 Two options:
 
-**Option A — Pre-built release:**  
-Download the zip from the [latest release](https://github.com/Lurkars/gloomhavensecretariat/releases/latest) and unzip it into your web server's document root (nginx, Apache, Caddy, etc.).
+**Option A — Pre-built release:**
+Download the zip from the [latest release](https://github.com/Lurkars/gh-tracker/releases/latest) and unzip it into your web server's document root (nginx, Apache, Caddy, etc.).
 
-**Option B — Build from source:**  
-Follow the [Production Build](#production-build) steps above, then copy `./dist/gloomhavensecretariat/` to your web server.
+**Option B — Build from source:**
+Follow the [Production Build](#production-build) steps above, then copy `./dist/gh-tracker/` to your web server.
 
 The app is a static Angular SPA. Configure your web server to serve `index.html` for all routes (catch-all / try_files).
 
@@ -130,8 +146,8 @@ Once installed, the app works fully offline.
 
 An Electron build is available for Linux, Mac, and Windows.
 
-**Download a pre-built binary:**  
-Get the appropriate file from the [latest release](https://github.com/Lurkars/gloomhavensecretariat/releases/latest) assets.
+**Download a pre-built binary:**
+Get the appropriate file from the [latest release](https://github.com/Lurkars/gh-tracker/releases/latest) assets.
 
 > Linux: AppImage format. Make executable with `chmod +x <file>.AppImage` before running.
 

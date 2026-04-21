@@ -1,6 +1,6 @@
 ## A comparison chart of the most popular Gloomhaven Companions Apps
 
-This is a comparison of popular companion apps. Since it was created by the author of *Gloomhaven Secretariat*, it's biased. If you would like to see features listed here that are missing, feel free to contact me! 
+This is a comparison of popular companion apps. Since it was created by the author of *Gloomhaven Secretariat*, it's biased. If you would like to see features listed here that are missing, feel free to contact me!
 
 - [Gloomhaven Secretariat](https://gloomhaven-secretariat.de) (*GHS*)
 - [X-Haven Assistant](https://github.com/Tarmslitaren/FrosthavenAssistant) (*XHA*)
@@ -139,7 +139,6 @@ There are a few other apps that are specialised or niche and therefore not taken
 | Custom Content                                                                  | ✅            | ⛔         | ⛔        | ⛔        | ⛔       |
 | Monster Editor (Stats + Abilities)                                              | ✅            | ⛔         | ⛔        | ⛔        | ⛔       |
 
-
 [^1]: Need to be enabled in **Settings** Menu
 
 [^1.2]: Only support monster cards, dungeon cards must be drawn manually
@@ -178,17 +177,13 @@ There are a few other apps that are specialised or niche and therefore not taken
 
 [^10]: Installable as PWA
 
-[^11]: Electron Builds not well tested
-
 [^12]: Level only shown, must be set manually
 
 [^13]: Unlimitied Undo/Redo
 
-[^14]: [Source Code](https://github.com/Lurkars/gloomhavensecretariat) ([AGPL 3.0](https://github.com/Lurkars/gloomhavensecretariat/blob/main/LICENSE))
+[^14]: [Source Code](https://github.com/Lurkars/gh-tracker) ([AGPL 3.0](https://github.com/Lurkars/gh-tracker/blob/main/LICENSE))
 
 [^15]: [Source Code](https://github.com/Tarmslitaren/FrosthavenAssistant) ([AGPL 3.0](https://github.com/Tarmslitaren/FrosthavenAssistant/blob/main/LICENSE))
-
-[^16.1]: Some special monsters missing
 
 [^16.2]: Only spawns rules yet
 

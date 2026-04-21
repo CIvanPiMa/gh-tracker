@@ -274,6 +274,7 @@ Translations are managed via [Weblate](https://i18n.gloomhaven-secretariat.de/).
 ## How to Add a New Edition
 
 1. **Create the edition folder:**
+
    ```bash
    mkdir data/myedition
    ```

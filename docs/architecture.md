@@ -1,5 +1,44 @@
 # GH Tracker — Architecture
 
+**Table of Contents**:
+
+- [1. Overview](#1-overview)
+- [2. Repository Structure](#2-repository-structure)
+- [3. Data Pipeline](#3-data-pipeline)
+  - [3.1 Edition Folder Structure](#31-edition-folder-structure)
+  - [3.2 build-data.js Compilation](#32-build-datajs-compilation)
+  - [3.3 Runtime Loading](#33-runtime-loading)
+- [4. Application Layers](#4-application-layers)
+  - [4.1 Data Layer — `src/app/game/model/data/`](#41-data-layer--srcappgamemodeldata)
+  - [4.2 Business Logic Layer — `src/app/game/businesslogic/`](#42-business-logic-layer--srcappgamebusinesslogic)
+    - [GameManager (`GameManager.ts`)](#gamemanager-gamemanagerts)
+    - [Manager Responsibilities](#manager-responsibilities)
+    - [Command Layer — `src/app/game/commands/`](#command-layer--srcappgamecommands)
+  - [4.3 UI Layer — `src/app/ui/`](#43-ui-layer--srcappui)
+- [5. Game State Model](#5-game-state-model)
+  - [5.1 The `Game` Class (`src/app/game/model/Game.ts`)](#51-the-game-class-srcappgamemodelgamets)
+  - [5.2 `GameState` Enum](#52-gamestate-enum)
+  - [5.3 Serialization](#53-serialization)
+- [6. State Management](#6-state-management)
+  - [6.1 Angular Signals (Reactive Layer)](#61-angular-signals-reactive-layer)
+  - [6.2 StorageManager (Persistence)](#62-storagemanager-persistence)
+  - [6.3 StateManager (Undo/Redo + Persistence)](#63-statemanager-undoredo--persistence)
+- [7. Multi-Client Sync (GHS Server)](#7-multi-client-sync-ghs-server)
+  - [Message Flow](#message-flow)
+  - [Conflict Resolution](#conflict-resolution)
+  - [`Permissions`](#permissions)
+- [8. Build System](#8-build-system)
+  - [8.1 npm Scripts](#81-npm-scripts)
+  - [8.2 Angular Build Configurations](#82-angular-build-configurations)
+  - [8.3 Service Worker / PWA](#83-service-worker--pwa)
+  - [8.4 Electron](#84-electron)
+- [9. Deployment Options](#9-deployment-options)
+- [10. Key Extension Points](#10-key-extension-points)
+  - [10.1 Adding a New Game Edition](#101-adding-a-new-game-edition)
+  - [10.2 Adding a New Manager / Feature](#102-adding-a-new-manager--feature)
+  - [10.3 Adding a New UI Component](#103-adding-a-new-ui-component)
+  - [10.4 Data Format Reference](#104-data-format-reference)
+
 ## 1. Overview
 
 GH Tracker (upstream: Gloomhaven Secretariat) is a Progressive Web App companion for Gloomhaven-family board games. It runs entirely in the browser as an Angular SPA. Persistence is handled offline via IndexedDB (with a LocalStorage fallback), and optionally synchronized across multiple clients via a separate GHS Server over WebSocket.
@@ -115,6 +154,7 @@ Each game edition lives under `data/{edition}/`. The required file is `base.json
 `scripts/build-data.js` runs as a Node.js script **before every start/build/test** via npm lifecycle hooks (`prestart`, `prebuild`, `pretest`). During `npm run watch`, nodemon re-runs it whenever any file under `data/` changes.
 
 Process per edition folder:
+
 1. Read `base.json` as the base object.
 2. Merge in all optional JSON files via `load_file()`.
 3. Collect `character/` and `monster/` sub-folders as arrays via `load_subfolder()`.
@@ -153,7 +193,9 @@ TypeScript interfaces/classes that mirror the compiled JSON structure. Key types
 All managers are plain TypeScript classes (not Angular services, except `GhsManager` and `StorageManager`). They are instantiated as singletons by `GameManager` and exported as module-level constants.
 
 #### GameManager (`GameManager.ts`)
+
 Central coordinator. Holds the `Game` instance, all `EditionData`, all sub-manager references, and the two Angular `WritableSignal`s used to broadcast state changes to the UI:
+
 - `uiChangeSignal: WritableSignal<number>` — incremented on any state mutation
 - `uiChangeFromServer: WritableSignal<boolean>` — flags whether the change originated from the server
 
@@ -345,7 +387,7 @@ The `Permissions` model (`src/app/game/model/Permissions.ts`) specifies which ch
 
 ### 8.2 Angular Build Configurations
 
-Defined in `angular.json` under `projects.gloomhavensecretariat.architect.build.configurations`:
+Defined in `angular.json` under `projects.gh-tracker.architect.build.configurations`:
 
 | Configuration | Environment File | Notes |
 |---|---|---|
@@ -354,7 +396,7 @@ Defined in `angular.json` under `projects.gloomhavensecretariat.architect.build.
 | `electron` | `environment.electron.ts` | `electron: true`, `base-href ./` for file:// URLs |
 | `unbranded` | `environment.unbranded.ts` | `branded: false` — hides upstream links/branding |
 
-Output directory: `dist/gloomhavensecretariat/`.
+Output directory: `dist/gh-tracker/`.
 
 ### 8.3 Service Worker / PWA
 
