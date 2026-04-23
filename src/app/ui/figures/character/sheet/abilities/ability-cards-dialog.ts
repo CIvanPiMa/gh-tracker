@@ -9,6 +9,7 @@ import { Ability } from 'src/app/game/model/data/Ability';
 import { AbilityComponent } from 'src/app/ui/figures/ability/ability';
 import { AbilityDialogComponent } from 'src/app/ui/figures/ability/ability-dialog';
 import { EnhancementDialogComponent } from 'src/app/ui/figures/character/sheet/abilities/enhancements/enhancement-dialog';
+import { ConfirmDialogComponent } from 'src/app/ui/helper/confirm/confirm';
 import { GhsLabelDirective } from 'src/app/ui/helper/label';
 import { GhsRangePipe } from 'src/app/ui/helper/Pipes';
 import { PointerInputDirective } from 'src/app/ui/helper/pointer-input';
@@ -45,8 +46,8 @@ export class AbilityCardsDialogComponent implements OnInit {
   smallAbilities: Ability[] = [];
   cardsToPick: number = 1;
   levelToPick: number = 1;
-  sort: 'level-deck' | 'cardId' | 'level-name' | 'name' = 'level-deck';
-  sorts: ('level-deck' | 'cardId' | 'level-name' | 'name')[] = ['level-deck', 'cardId', 'level-name', 'name'];
+  sort: 'initiative' | 'level-deck' | 'cardId' | 'level-name' | 'name' = 'initiative';
+  sorts: ('initiative' | 'level-deck' | 'cardId' | 'level-name' | 'name')[] = ['initiative', 'level-deck', 'cardId', 'level-name', 'name'];
   deck: boolean = true;
   maxLevel: number = 1;
   enhanced: boolean = false;
@@ -138,7 +139,17 @@ export class AbilityCardsDialogComponent implements OnInit {
         this.character.tags.push('edit-abilities');
       }
 
-      if (this.sort === 'cardId') {
+      if (this.sort === 'initiative') {
+        this.visibleAbilities.sort((a, b) => {
+          if (a.initiative !== b.initiative) {
+            return a.initiative - b.initiative;
+          }
+          if (a.cardId && b.cardId) {
+            return a.cardId - b.cardId;
+          }
+          return 0;
+        });
+      } else if (this.sort === 'cardId') {
         this.visibleAbilities.sort((a, b) => {
           if (a.cardId && b.cardId) {
             return a.cardId - b.cardId;
@@ -238,12 +249,97 @@ export class AbilityCardsDialogComponent implements OnInit {
   }
 
   clickAbility(ability: Ability) {
-    const level1 = typeof ability.level === 'string' || ability.level === 1;
-    if (level1 || !this.levelToPick || !this.deck) {
-      this.openDialog(ability);
+    if (!this.levelToPick && this.deck) {
+      this.toggleTurnSelection(ability);
     } else {
-      this.toggleDeck(ability);
+      const level1 = typeof ability.level === 'string' || ability.level === 1;
+      if (level1 || !this.levelToPick || !this.deck) {
+        this.openDialog(ability);
+      } else {
+        this.toggleDeck(ability);
+      }
     }
+  }
+
+  toggleTurnSelection(ability: Ability) {
+    const abilityIndex = this.abilities.indexOf(ability);
+    const usedAbilities = this.character.discardedAbilities || [];
+    if (usedAbilities.includes(abilityIndex)) {
+      return;
+    }
+    const selectedAbilities = this.character.selectedAbilities || [];
+    const alreadySelected = selectedAbilities.includes(abilityIndex);
+    gameManager.stateManager.before(
+      alreadySelected ? 'character.deselectAbility' : 'character.selectAbility',
+      gameManager.characterManager.characterName(this.character, true, true),
+      '' + (ability.name || ability.cardId || '')
+    );
+    if (alreadySelected) {
+      this.character.selectedAbilities = selectedAbilities.filter((i) => i !== abilityIndex);
+    } else if (selectedAbilities.length < 2) {
+      this.character.selectedAbilities = [...selectedAbilities, abilityIndex];
+    }
+    gameManager.stateManager.after();
+    this.ghsManager.triggerUiChange();
+  }
+
+  selectInitiative(initiative: number) {
+    gameManager.stateManager.before(
+      'setInitiative',
+      gameManager.characterManager.characterName(this.character, true, true),
+      '' + initiative
+    );
+    this.character.initiative = initiative;
+    this.character.initiativeVisible = true;
+    gameManager.stateManager.after();
+    this.ghsManager.triggerUiChange();
+  }
+
+  shortRest() {
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      panelClass: ['dialog'],
+      data: { label: 'character.abilities.shortRest' }
+    });
+    confirmDialog.closed.subscribe({
+      next: (result) => {
+        if (result) {
+          gameManager.stateManager.before('character.shortRest', gameManager.characterManager.characterName(this.character, true, true));
+          this.character.discardedAbilities = [];
+          gameManager.stateManager.after();
+          this.ghsManager.triggerUiChange();
+        }
+      }
+    });
+  }
+
+  toggleAbilityState(ability: Ability, field: 'discardedAbilities' | 'lostAbilities' | 'inactiveAbilities') {
+    const abilityIndex = this.abilities.indexOf(ability);
+    const list: number[] = this.character[field] || [];
+    const active = list.includes(abilityIndex);
+    gameManager.stateManager.before(
+      active ? 'character.ability.stateOff' : 'character.ability.stateOn',
+      gameManager.characterManager.characterName(this.character, true, true),
+      field,
+      '' + (ability.name || ability.cardId || '')
+    );
+    const allFields: ('discardedAbilities' | 'lostAbilities' | 'inactiveAbilities')[] = [
+      'discardedAbilities',
+      'lostAbilities',
+      'inactiveAbilities'
+    ];
+    if (active) {
+      this.character[field] = list.filter((i) => i !== abilityIndex);
+    } else {
+      // clear this ability from all other state fields first (mutual exclusivity)
+      for (const other of allFields) {
+        if (other !== field) {
+          this.character[other] = (this.character[other] || []).filter((i) => i !== abilityIndex);
+        }
+      }
+      this.character[field] = [...list, abilityIndex];
+    }
+    gameManager.stateManager.after();
+    this.ghsManager.triggerUiChange();
   }
 
   toggleDeck(ability: Ability, force: boolean = false) {

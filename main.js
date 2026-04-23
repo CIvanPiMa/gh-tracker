@@ -16,7 +16,7 @@ function createWindow() {
     }
   });
 
-  mainWindow.loadFile('./dist/gloomhavensecretariat/index.html');
+  mainWindow.loadFile('./dist/gh-tracker/index.html');
 
   // Clear cache to ensure old Service Worker is removed, but keep localStorage/IndexedDB
   mainWindow.webContents.session.clearCache();

@@ -4,9 +4,7 @@
   </div>
   <div class="line version">
     @if (branded) {
-      <a target="_blank" [href]="'https://github.com/Lurkars/gloomhavensecretariat/releases/tag/v' + version"
-        >Gloomhaven Secretariat v{{ version }}</a
-      >
+      <a target="_blank" [href]="'https://github.com/Lurkars/gh-tracker/releases/tag/v' + version">Gloomhaven Secretariat v{{ version }}</a>
     } @else {
       <a class="disabled">Gloomhaven Secretariat v{{ version }}</a>
     }
@@ -44,7 +42,7 @@
       </div>
       <div class="column">
         <p>
-          <a href="https://github.com/Lurkars/gloomhavensecretariat" target="_blank"
+          <a href="https://github.com/Lurkars/gh-tracker" target="_blank"
             ><span [ghs-label]="branded ? 'about.sourceCode' : 'about.sourceCode.author'"></span
           ></a>
         </p>
@@ -53,9 +51,7 @@
         <p
           [ghs-label]="'about.license'"
           [ghs-label-args]="[
-            branded
-              ? '<a href=\'https:\/\/\github.com\/Lurkars\/gloomhavensecretariat\/blob\/main\/LICENSE\'  target=\'_blank\'> AGPL3</a>'
-              : 'AGPL3'
+            branded ? '<a href=\'https:\/\/\github.com\/Lurkars\/gh-tracker\/blob\/main\/LICENSE\'  target=\'_blank\'> AGPL3</a>' : 'AGPL3'
           ]"
         ></p>
       </div>

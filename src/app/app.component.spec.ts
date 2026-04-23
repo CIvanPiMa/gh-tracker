@@ -27,8 +27,8 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'gloomhavensecretariat'`, () => {
-    expect(component.title).toEqual('gloomhavensecretariat');
+  it(`should have as title 'gh-tracker'`, () => {
+    expect(component.title).toEqual('gh-tracker');
   });
 
   describe('onRightClick', () => {

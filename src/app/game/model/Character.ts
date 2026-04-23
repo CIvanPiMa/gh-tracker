@@ -33,6 +33,12 @@ export class Character extends CharacterData implements Entity, Figure {
   fullview: boolean = false;
   attackModifierDeck: AttackModifierDeck;
 
+  selectedAbilities: number[] = [];
+  usedAbilities: number[] = [];
+  discardedAbilities: number[] = [];
+  lostAbilities: number[] = [];
+  inactiveAbilities: number[] = [];
+
   token: number = 0;
   tokenValues: number[] = [];
   absent: boolean = false;
@@ -160,7 +166,10 @@ export class Character extends CharacterData implements Entity, Figure {
       this.shieldPersistent,
       this.retaliate,
       this.retaliatePersistent,
-      this.fullview
+      this.fullview,
+      this.discardedAbilities || [],
+      this.lostAbilities || [],
+      this.inactiveAbilities || []
     );
   }
 
@@ -304,6 +313,9 @@ export class Character extends CharacterData implements Entity, Figure {
     if (model.fullView) {
       this.fullview = model.fullView;
     }
+    this.discardedAbilities = model.discardedAbilities || [];
+    this.lostAbilities = model.lostAbilities || [];
+    this.inactiveAbilities = model.inactiveAbilities || [];
   }
 }
 
@@ -349,6 +361,9 @@ export class GameCharacterModel {
   retaliate: string[];
   retaliatePersistent: string[];
   fullView: boolean;
+  discardedAbilities: number[];
+  lostAbilities: number[];
+  inactiveAbilities: number[];
 
   constructor(
     name: string,
@@ -391,7 +406,10 @@ export class GameCharacterModel {
     shieldPersistent: Action | undefined,
     retaliate: Action[],
     retaliatePersistent: Action[],
-    fullView: boolean
+    fullView: boolean,
+    discardedAbilities: number[],
+    lostAbilities: number[],
+    inactiveAbilities: number[]
   ) {
     this.name = name;
     this.edition = edition;
@@ -434,5 +452,8 @@ export class GameCharacterModel {
     this.retaliate = retaliate.map((action) => JSON.stringify(action));
     this.retaliatePersistent = retaliatePersistent.map((action) => JSON.stringify(action));
     this.fullView = fullView;
+    this.discardedAbilities = JSON.parse(JSON.stringify(discardedAbilities));
+    this.lostAbilities = JSON.parse(JSON.stringify(lostAbilities));
+    this.inactiveAbilities = JSON.parse(JSON.stringify(inactiveAbilities));
   }
 }
