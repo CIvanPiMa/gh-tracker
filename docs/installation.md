@@ -106,6 +106,8 @@ This uses `docker-compose.yaml` and serves the app on port 80.
 docker compose -f docker-compose.dev.yaml up -d
 ```
 
+This serves the app on port 4200, mounts the local code into the container for live development, and watches for changes in `data/` to rebuild automatically.
+
 ### Standalone Docker
 
 ```bash

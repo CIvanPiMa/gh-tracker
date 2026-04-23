@@ -1,19 +1,19 @@
 {
-  "name": "gloomhavensecretariat",
+  "name": "gh-tracker",
   "version": "0.156.6",
   "license": "AGPL3",
   "description": "Gloomhaven Secretariat is a Gloomhaven/Frosthaven Companion app.",
   "homepage": "https://gloomhaven-secretariat.de",
   "author": {
-    "name": "Lurkars",
+    "name": "CIvanPiMa",
     "email": "contact@gloomhaven-secretariat.de",
     "url": "https://www.champonthis.de"
   },
-  "repository": "github:Lurkars/gloomhavensecretariat",
-  "bugs": "https://github.com/Lurkars/gloomhavensecretariat/issues",
+  "repository": "github:CIvanPiMa/gh-tracker",
+  "bugs": "https://github.com/CIvanPiMa/gh-tracker/issues",
   "funding": {
     "type": "ko-fi",
-    "url": "https://ko-fi.com/lurkars"
+    "url": "https://ko-fi.com/cIvanPiMa"
   },
   "main": "main.js",
   "nodemonConfig": {
@@ -46,12 +46,12 @@
     "electron:build:linux:appimage": "npm run build -- --configuration electron --base-href ./ && electron-builder --linux AppImage"
   },
   "build": {
-    "appId": "gloomhavensecretariat",
+    "appId": "gh-tracker",
     "publish": [
       {
         "provider": "github",
-        "owner": "Lurkars",
-        "repo": "gloomhavensecretariat"
+        "owner": "CIvanPiMa",
+        "repo": "gh-tracker"
       }
     ],
     "linux": {
@@ -84,7 +84,7 @@
     },
     "files": [
       "main.js",
-      "dist/gloomhavensecretariat"
+      "dist/gh-tracker"
     ]
   },
   "private": true,

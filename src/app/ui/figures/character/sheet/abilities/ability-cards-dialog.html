@@ -1,4 +1,4 @@
-<div class="ability-cards-dialog">
+<div class="ability-cards-dialog" [style.--ghs-character-color]="character.color">
   <div class="menu">
     @if (levelToPick) {
       <p class="title" [ghs-label]="'character.abilities.pickCard'" [ghs-label-args]="[levelToPick]"></p>
@@ -67,12 +67,32 @@
     }
   </div>
   <div class="scroll-container">
-    <div class="abilities">
-      @if (!exclusiveLevel && !levelToPick && !enhanced) {
-        <div class="container">
-          <ghs-ability [character]="character"></ghs-ability>
+    @if (
+      !levelToPick &&
+      deck &&
+      ((character.selectedAbilities && character.selectedAbilities.length) ||
+        (character.discardedAbilities && character.discardedAbilities.length))
+    ) {
+      <div class="selected-for-round">
+        <p class="title">Selected for Round</p>
+        <div class="selected-initiative-options">
+          @for (abilityIndex of character.selectedAbilities; track abilityIndex) {
+            <div
+              class="initiative-option"
+              [ngClass]="{ active: character.initiative === abilities[abilityIndex].initiative && character.initiative > 0 }"
+              (click)="selectInitiative(abilities[abilityIndex].initiative)"
+            >
+              <img src="./assets/images/initiative.svg" class="ghs-svg" />
+              <span>{{ abilities[abilityIndex].initiative }}</span>
+            </div>
+          }
         </div>
-      }
+        @if (character.discardedAbilities && character.discardedAbilities.length) {
+          <button class="short-rest-btn" (click)="shortRest()">Short Rest</button>
+        }
+      </div>
+    }
+    <div class="abilities">
       @for (ability of visibleAbilities | trackUUID; track ability._trackUUID) {
         <div
           class="container ability"
@@ -81,17 +101,55 @@
             'in-deck': ability.level === 1 || ability.level === 'X' || character.progress.deck.indexOf(abilities.indexOf(ability)) !== -1,
             always: ability.level === 1 || ability.level === 'X',
             disabled:
-              character.progress.deck.indexOf(abilities.indexOf(ability)) === -1 && (levelToPick < +ability.level || cardsToPick < 1)
+              character.progress.deck.indexOf(abilities.indexOf(ability)) === -1 && (levelToPick < +ability.level || cardsToPick < 1),
+            selected: !levelToPick && deck && (character.selectedAbilities || []).includes(abilities.indexOf(ability)),
+            discarded: !levelToPick && deck && (character.discardedAbilities || []).includes(abilities.indexOf(ability)),
+            lost: !levelToPick && deck && (character.lostAbilities || []).includes(abilities.indexOf(ability)),
+            inactive: !levelToPick && deck && (character.inactiveAbilities || []).includes(abilities.indexOf(ability))
           }"
         >
-          <ghs-ability
-            [ability]="ability"
-            [character]="character"
-            [flipped]="true"
-            ghs-pointer-input
-            (singleClick)="clickAbility(ability)"
-            (doubleClick)="openDialog(ability)"
-          ></ghs-ability>
+          @if (
+            (character.lostAbilities || []).includes(abilities.indexOf(ability)) ||
+            (character.inactiveAbilities || []).includes(abilities.indexOf(ability))
+          ) {
+            <ghs-ability [character]="character"></ghs-ability>
+          } @else {
+            <ghs-ability
+              [ability]="ability"
+              [character]="character"
+              [flipped]="true"
+              ghs-pointer-input
+              (singleClick)="clickAbility(ability)"
+              (doubleClick)="openDialog(ability)"
+            ></ghs-ability>
+          }
+          @if (!levelToPick && deck) {
+            <div class="card-toggles top-right">
+              <img
+                class="card-toggle-btn"
+                src="./assets/images/action/card/spent.svg"
+                [ngClass]="{ active: (character.discardedAbilities || []).includes(abilities.indexOf(ability)) }"
+                [ghs-tooltip]="'character.abilities.discard'"
+                (click)="$event.stopPropagation(); toggleAbilityState(ability, 'discardedAbilities')"
+              />
+              <img
+                class="card-toggle-btn"
+                src="./assets/images/action/card/lost.svg"
+                [ngClass]="{ active: (character.lostAbilities || []).includes(abilities.indexOf(ability)) }"
+                [ghs-tooltip]="'character.abilities.lost'"
+                (click)="$event.stopPropagation(); toggleAbilityState(ability, 'lostAbilities')"
+              />
+            </div>
+            <div class="card-toggles bottom-right">
+              <img
+                class="card-toggle-btn"
+                src="./assets/images/action/card/loss.svg"
+                [ngClass]="{ active: !(character.inactiveAbilities || []).includes(abilities.indexOf(ability)) }"
+                [ghs-tooltip]="'character.abilities.inDeck'"
+                (click)="$event.stopPropagation(); toggleAbilityState(ability, 'inactiveAbilities')"
+              />
+            </div>
+          }
           @if (!deck) {
             <img
               class="deck"

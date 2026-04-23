@@ -2,6 +2,19 @@
 
 This document describes how GH Tracker's game data is structured, how the build pipeline works, and how to add new editions or custom content.
 
+**Table of Contents**:
+
+- [Data Pipeline Overview](#data-pipeline-overview)
+- [Edition Folder Structure](#edition-folder-structure)
+- [base.json Format](#basejson-format)
+- [Character Data Format](#character-data-format)
+- [Monster Data Format](#monster-data-format)
+- [Scenario Data Format](#scenario-data-format)
+- [Label / Translation Files](#label--translation-files)
+- [How to Add a New Edition](#how-to-add-a-new-edition)
+- [How to Add Custom Content](#how-to-add-custom-content)
+- [Schema Validation](#schema-validation)
+
 ---
 
 ## Data Pipeline Overview

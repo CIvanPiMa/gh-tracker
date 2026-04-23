@@ -521,13 +521,13 @@
     }
 
     @if (!character.bb && settingsManager.settings.characterHandSize && !character.absent) {
-      <div class="hand-size" ghs-pointer-input (singleClick)="openEntityMenu()" (doubleClick)="openAbilityCards()">
+      <div class="hand-size" ghs-pointer-input (singleClick)="openAbilityCards()">
         {{ character.handSize }}
       </div>
     }
 
     @if (character.bb && settingsManager.settings.characterHandSize && !character.absent) {
-      <div class="hand-size">{{ character.level - 1 }}|4</div>
+      <div class="hand-size" ghs-pointer-input (singleClick)="openAbilityCards()">{{ character.level - 1 }}|4</div>
     }
 
     @if (settingsManager.settings.characterHandSize && !character.absent) {

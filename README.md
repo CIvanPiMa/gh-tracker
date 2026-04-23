@@ -21,12 +21,6 @@ Tracks full character, party, and campaign progression across **Gloomhaven**, **
 
 It runs in any modern browser with no install required, supports multi-client sync via [GHS Server](https://github.com/Lurkars/ghs-server), and can be installed as a PWA or Electron app for offline use.
 
-This is a fork of [Lurkars/gh-tracker](https://github.com/Lurkars/gh-tracker) maintained by CIvanPiMa.
-
-> [!WARNING]
->
-> **SPOILER WARNING:** The `label/spoiler` folder in `data/` — and therefore the compiled edition files in `src/assets/data/` — contains spoilers. See [upstream discussion #103](https://github.com/Lurkars/gh-tracker/discussions/103) for details.
-
 ## Quick Start
 
 ```bash
@@ -52,6 +46,5 @@ See [docs/installation.md](./docs/installation.md) for full installation options
 See [docs/installation.md](./docs/installation.md) for the full guide. Quick options:
 
 - **PWA:** Open in browser → install via browser menu. [Chrome](https://support.google.com/chrome/answer/9658361) · [Safari iOS](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installing#safari_for_ios_iphoneos_ipados) · [Firefox Android](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installing#firefox_for_android)
-- **Electron:** Download from the [latest release](https://github.com/Lurkars/gh-tracker/releases/latest) assets (Linux, Mac, Windows)
 - **Self-host:** Unzip the release zip onto your web server, or run `docker compose up -d`
 - **Build from source:** `npm run build` — output at `./dist/gh-tracker`

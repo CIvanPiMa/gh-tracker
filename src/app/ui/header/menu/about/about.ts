@@ -20,7 +20,7 @@ export class AboutMenuComponent implements OnInit {
 
   async ngOnInit() {
     if (!this.branded) return;
-    await fetch('https://api.github.com/repos/lurkars/gloomhavensecretariat/releases/latest')
+    await fetch('https://api.github.com/repos/lurkars/gh-tracker/releases/latest')
       .then((response) => {
         if (!response.ok) {
           throw Error();

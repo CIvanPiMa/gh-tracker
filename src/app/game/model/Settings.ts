@@ -79,10 +79,10 @@ export class Settings {
   characterAttackModifierDeckPermanentActive: boolean = false;
   characterCompact: boolean = false;
   characterFullView: boolean = false;
-  characterHandSize: boolean = false;
+  characterHandSize: boolean = true;
   characterIdentities: boolean = true;
   characterIdentityHint: boolean = true;
-  characterItems: boolean = false;
+  characterItems: boolean = true;
   characterItemsApply: boolean = true;
   characterItemsPermanent: boolean = false;
   characterItemsPermanentActive: boolean = false;
@@ -90,7 +90,7 @@ export class Settings {
   characterItemsPermanentSorted: boolean = true;
   characterItemsPermanentZoom: number = 1;
   characterItemsShareHouseRule: boolean = false;
-  playerNumber: boolean = false;
+  playerNumber: boolean = true;
   characterSheet: boolean = true;
   characterSheetCompact: boolean = false;
   characterSheetLocked: boolean = false;
@@ -155,7 +155,7 @@ export class Settings {
   globalFontsize: number = 1;
   globalMapHighlighting: boolean = true;
   fullscreen: boolean = false;
-  hideAbsent: boolean = false;
+  hideAbsent: boolean = true;
   hideCharacterHP: boolean = false;
   hideCharacterLoot: boolean = false;
   hideCharacterXP: boolean = false;

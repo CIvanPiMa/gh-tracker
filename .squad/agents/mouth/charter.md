@@ -20,7 +20,7 @@ You are the documentation specialist and technical writer for the GH Tracker pro
 
 ## Domain Knowledge
 
-- README is at `/README.md` and was inherited from the upstream project (Lurkars/gloomhavensecretariat)
+- README is at `/README.md`
 - This fork is at `CIvanPiMa/gh-tracker` — update branding references accordingly
 - Supported editions: `data/` subfolders (`gh/`, `fh/`, `jotl/`, `fc/`, `cs/`, `toa/`, `bb/`, `gh2e/`, `bas/`, `bb-promotional/`, `cc/`, `ccug/`, `cq/`, `fh-crossover/`, `gh-envx/`, `gh-solo-items/`, `ir/`, `mp/`, `r100kc/`, `sc/`, `sits/`, `solo/`, `sox/`)
 - Build commands: `npm install`, `npm run start`, `npm run build`, `npm run test`

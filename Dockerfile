@@ -1,11 +1,10 @@
-FROM node:24-alpine as builder
+FROM node:24-alpine AS builder
 WORKDIR /src
 COPY package.json /src/
-COPY package-lock.json /src/
-RUN npm ci
+RUN npm i
 COPY . .
 RUN npm run build
 
 FROM nginx:alpine
-COPY --from=builder /src/dist/gloomhavensecretariat /usr/share/nginx/html
+COPY --from=builder /src/dist/gh-tracker /usr/share/nginx/html
 EXPOSE 80

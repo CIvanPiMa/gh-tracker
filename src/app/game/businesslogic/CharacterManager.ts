@@ -461,6 +461,9 @@ export class CharacterManager {
         }
         figure.lootCardsVisible = false;
         figure.longRest = false;
+        figure.discardedAbilities = [...new Set([...(figure.discardedAbilities || []), ...(figure.selectedAbilities || [])])];
+        figure.usedAbilities = [];
+        figure.selectedAbilities = [];
 
         figure.summons = figure.summons.filter((summon) => gameManager.entityManager.isAlive(summon));
 
