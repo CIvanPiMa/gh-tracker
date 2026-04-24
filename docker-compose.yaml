@@ -1,9 +1,0 @@
-services:
-  ghs-client:
-    container_name: ghs
-    pull_policy: build
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - '80:80'

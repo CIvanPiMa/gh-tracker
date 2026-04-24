@@ -139,8 +139,19 @@ export class AbilityCardsDialogComponent implements OnInit {
         this.character.tags.push('edit-abilities');
       }
 
+      const stateRank = (ability: Ability): number => {
+        const i = this.abilities.indexOf(ability);
+        if ((this.character.selectedAbilities || []).includes(i)) return 0;
+        if ((this.character.lostAbilities || []).includes(i)) return 3;
+        if ((this.character.inactiveAbilities || []).includes(i)) return 4;
+        if ((this.character.discardedAbilities || []).includes(i)) return 2;
+        return 1; // available
+      };
+
       if (this.sort === 'initiative') {
         this.visibleAbilities.sort((a, b) => {
+          const stateDiff = stateRank(a) - stateRank(b);
+          if (stateDiff !== 0) return stateDiff;
           if (a.initiative !== b.initiative) {
             return a.initiative - b.initiative;
           }
@@ -151,6 +162,8 @@ export class AbilityCardsDialogComponent implements OnInit {
         });
       } else if (this.sort === 'cardId') {
         this.visibleAbilities.sort((a, b) => {
+          const stateDiff = stateRank(a) - stateRank(b);
+          if (stateDiff !== 0) return stateDiff;
           if (a.cardId && b.cardId) {
             return a.cardId - b.cardId;
           }
@@ -158,6 +171,8 @@ export class AbilityCardsDialogComponent implements OnInit {
         });
       } else if (this.sort === 'level-name') {
         this.visibleAbilities.sort((a, b) => {
+          const stateDiff = stateRank(a) - stateRank(b);
+          if (stateDiff !== 0) return stateDiff;
           if (a.level === b.level) {
             if (a.name && b.name) {
               return a.name < b.name ? -1 : 1;
@@ -180,6 +195,8 @@ export class AbilityCardsDialogComponent implements OnInit {
         });
       } else if (this.sort === 'level-deck') {
         this.visibleAbilities.sort((a, b) => {
+          const stateDiff = stateRank(a) - stateRank(b);
+          if (stateDiff !== 0) return stateDiff;
           if ((a.level === 1 || a.level === 'X') && (b.level === 1 || b.level === 'X')) {
             return 0;
           } else if (a.level === 1 || a.level === 'X') {
@@ -201,6 +218,8 @@ export class AbilityCardsDialogComponent implements OnInit {
         });
       } else if (this.sort === 'name') {
         this.visibleAbilities.sort((a, b) => {
+          const stateDiff = stateRank(a) - stateRank(b);
+          if (stateDiff !== 0) return stateDiff;
           if (a.name && b.name) {
             return a.name < b.name ? -1 : 1;
           } else if (a.cardId && b.cardId) {

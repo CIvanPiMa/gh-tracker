@@ -4,36 +4,15 @@ This guide covers all ways to install or deploy GH Tracker.
 
 **Table of Contents**:
 
-- [Prerequisites](#prerequisites)
 - [Development Setup](#development-setup)
-  - [Docker (dev mode)](#docker-dev-mode)
 - [Production Build](#production-build)
 - [Docker](#docker)
-  - [Production (Docker Compose)](#production-docker-compose)
-  - [Development (Docker Compose)](#development-docker-compose)
-  - [Standalone Docker](#standalone-docker)
+  - [Production](#production)
+  - [Development](#development)
 - [Self-Hosting](#self-hosting)
 - [PWA (Install as App)](#pwa-install-as-app)
 - [Electron (Standalone Desktop App)](#electron-standalone-desktop-app)
 - [Environment Configuration](#environment-configuration)
-  - [Disabling upstream branding](#disabling-upstream-branding)
-
----
-
-## Prerequisites
-
-- **Node.js** — current LTS release (v20+). Download at [nodejs.org](https://nodejs.org).
-- **npm** — bundled with Node.js (v10+).
-- **Git** — for cloning the repository.
-
-Verify your versions:
-
-```bash
-node --version   # v20.x or newer
-npm --version    # 10.x or newer
-```
-
----
 
 ## Development Setup
 
@@ -58,16 +37,6 @@ npm run watch
 
 This uses [nodemon](https://nodemon.io/) to re-run `build-data.js` whenever any file under `data/` changes.
 
-### Docker (dev mode)
-
-If you prefer Docker for development:
-
-```bash
-docker compose -f docker-compose.dev.yaml up -d
-```
-
----
-
 ## Production Build
 
 ```bash
@@ -88,34 +57,28 @@ npx serve ./dist/gh-tracker
 > npm run build -- --base-href /gh-tracker/
 > ```
 
----
-
 ## Docker
 
-### Production (Docker Compose)
+### Production
+
+Build and run the production image (served by nginx on port 80):
 
 ```bash
-docker compose up -d
+docker build -t gh-tracker .
+docker run --rm -p 80:80 --name gh-tracker gh-tracker
 ```
 
-This uses `docker-compose.yaml` and serves the app on port 80.
+### Development
 
-### Development (Docker Compose)
+Build the dev image and run it with your local source mounted for live reload (served on port 4200):
 
 ```bash
-docker compose -f docker-compose.dev.yaml up -d
+docker build -t gh-tracker-dev -f Dockerfile.dev .
+docker run -it --rm -p 4200:4200 \
+  -v $(pwd):/usr/src/gh-tracker \
+  -v /usr/src/gh-tracker/node_modules \
+  gh-tracker-dev
 ```
-
-This serves the app on port 4200, mounts the local code into the container for live development, and watches for changes in `data/` to rebuild automatically.
-
-### Standalone Docker
-
-```bash
-docker pull gh-tracker/ghs
-docker run --rm -p 80:80 --name ghs gh-tracker/ghs
-```
-
----
 
 ## Self-Hosting
 
@@ -129,8 +92,6 @@ Follow the [Production Build](#production-build) steps above, then copy `./dist/
 
 The app is a static Angular SPA. Configure your web server to serve `index.html` for all routes (catch-all / try_files).
 
----
-
 ## PWA (Install as App)
 
 GH Tracker is a Progressive Web App — it can be installed on any device that supports PWAs:
@@ -141,8 +102,6 @@ GH Tracker is a Progressive Web App — it can be installed on any device that s
 - Other browsers: search for "install PWA \<your browser\>"
 
 Once installed, the app works fully offline.
-
----
 
 ## Electron (Standalone Desktop App)
 
@@ -163,30 +122,13 @@ electron . --no-sandbox
 npm run electron
 ```
 
----
-
 ## Environment Configuration
 
 Environment files are in `src/environments/`:
 
-| File | Used for |
-|---|---|
-| `environment.ts` | Development (`ng serve`) |
-| `environment.prod.ts` | Production builds |
-| `environment.electron.ts` | Electron builds |
-| `environment.unbranded.ts` | Unbranded/fork builds |
-
-### Disabling upstream branding
-
-If you are running a fork and want to hide references to `gloomhaven-secretariat.de`, `Lurkars`, feedback dialogs, and public server lists, set `branded: false` in the relevant environment file:
-
-```typescript
-// src/environments/environment.prod.ts
-export const environment = {
-  production: true,
-  branded: false,   // <-- set this
-  // ...
-};
-```
-
-This removes upstream help links, feedback dialogs, and the public GHS server list from the UI.
+| File                       | Used for                 |
+| -------------------------- | ------------------------ |
+| `environment.ts`           | Development (`ng serve`) |
+| `environment.prod.ts`      | Production builds        |
+| `environment.electron.ts`  | Electron builds          |
+| `environment.unbranded.ts` | Unbranded/fork builds    |

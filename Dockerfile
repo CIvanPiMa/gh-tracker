@@ -1,7 +1,7 @@
 FROM node:24-alpine AS builder
 WORKDIR /src
 COPY package.json /src/
-RUN npm i
+RUN npm install
 COPY . .
 RUN npm run build
 

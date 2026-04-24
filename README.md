@@ -1,15 +1,8 @@
 # GH Tracker
 
-![Screenshot](./resources/Screenshot.png)
-
-> Scenario 1 of Gloomhaven with starting classes of different editions
-
 **Table of Contents**:
 
 - [Introduction](#introduction)
-- [Quick Start](#quick-start)
-- [Features](#features)
-  - [Scenario Tracking](#scenario-tracking)
 - [Install](#install)
 
 ## Introduction
@@ -21,30 +14,10 @@ Tracks full character, party, and campaign progression across **Gloomhaven**, **
 
 It runs in any modern browser with no install required, supports multi-client sync via [GHS Server](https://github.com/Lurkars/ghs-server), and can be installed as a PWA or Electron app for offline use.
 
-## Quick Start
-
-```bash
-git clone https://github.com/CIvanPiMa/gh-tracker.git
-cd gh-tracker
-npm install
-npm run start      # dev server at http://localhost:4200
-```
-
-For Docker: `docker compose up -d`
-
-See [docs/installation.md](./docs/installation.md) for full installation options including Docker, PWA, Electron, and self-hosting.
-
-## Features
-
-### Scenario Tracking
-
-- **Initiative** sorting for all figures
-- **Health** — automatic exhaust/dead, per-level max values
-
 ## Install
 
 See [docs/installation.md](./docs/installation.md) for the full guide. Quick options:
 
 - **PWA:** Open in browser → install via browser menu. [Chrome](https://support.google.com/chrome/answer/9658361) · [Safari iOS](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installing#safari_for_ios_iphoneos_ipados) · [Firefox Android](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installing#firefox_for_android)
-- **Self-host:** Unzip the release zip onto your web server, or run `docker compose up -d`
+- **Self-host:** Unzip the release zip onto your web server, or build and run with Docker: `docker build -t gh-tracker . && docker run --rm -p 80:80 gh-tracker`
 - **Build from source:** `npm run build` — output at `./dist/gh-tracker`

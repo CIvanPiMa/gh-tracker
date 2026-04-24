@@ -503,7 +503,7 @@
       <div class="column">
         <div class="menu-container two-column" ghs-setting-menu="locale" [values]="settingsManager.locales"></div>
 
-        @if (branded) {
+        <!-- @if (branded) {
           <div class="separator span"></div>
           <div class="line">
             <a
@@ -517,7 +517,7 @@
               <span [ghs-label]="'settings.locale.help'"></span>
             </a>
           </div>
-        }
+        } -->
       </div>
     </div>
 
@@ -555,13 +555,13 @@
             <span [ghs-label]="'settings.helperDefaults'"></span>
           </a>
         </div>
-        @if (branded) {
+        <!-- @if (branded) {
           <div class="line">
             <a tabclick (click)="lurkarsDefaults()">
               <span [ghs-label]="'settings.lurkarsDefaults'"></span>
             </a>
           </div>
-        }
+        } -->
         <div class="line">
           <a tabclick (click)="xhaDefaults()">
             <span [ghs-label]="'settings.xhaDefaults'"></span>

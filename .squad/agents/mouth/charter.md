@@ -26,7 +26,6 @@ You are the documentation specialist and technical writer for the GH Tracker pro
 - Build commands: `npm install`, `npm run start`, `npm run build`, `npm run test`
 - Docker: `docker compose up -d` (production), `docker compose -f docker-compose.dev.yaml up -d` (dev)
 - Architecture: Angular SPA → built from JSON data in `data/` → deployed as static site or Docker container
-- Existing resources: `resources/app-comparison.md`, `resources/keyboard-shortcuts.md`
 
 ## Work Style
 

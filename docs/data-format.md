@@ -96,12 +96,12 @@ Every edition requires a `base.json` with the following fields:
 }
 ```
 
-| Field | Type | Description |
-|---|---|---|
-| `edition` | string | Edition identifier (must match folder name) |
-| `conditions` | string[] | Conditions active in this edition |
-| `worldMap` | object | Pixel dimensions of the world map image |
-| `logoUrl` | string | Path to the edition logo image |
+| Field        | Type     | Description                                 |
+| ------------ | -------- | ------------------------------------------- |
+| `edition`    | string   | Edition identifier (must match folder name) |
+| `conditions` | string[] | Conditions active in this edition           |
+| `worldMap`   | object   | Pixel dimensions of the world map image     |
+| `logoUrl`    | string   | Path to the edition logo image              |
 
 Additional optional fields: `campaign`, `solo`, `crossover`, `version`.
 
@@ -151,17 +151,17 @@ Each character file in `character/{name}.json` defines a playable class:
 }
 ```
 
-| Field | Type | Description |
-|---|---|---|
-| `name` | string | Internal identifier (matches filename without `.json`) |
-| `characterClass` | string | Race/class group identifier |
-| `gender` | `"m"` \| `"f"` \| `"n"` | Character gender |
-| `edition` | string | Edition this character belongs to |
-| `handSize` | number | Number of ability cards in hand |
-| `retireEvent` | string | Event card number drawn on retirement |
-| `color` | string | Hex color for UI display |
-| `stats` | array | HP per level (levels 1–9) |
-| `perks` | array | Perk definitions modifying the AM deck |
+| Field            | Type                    | Description                                            |
+| ---------------- | ----------------------- | ------------------------------------------------------ |
+| `name`           | string                  | Internal identifier (matches filename without `.json`) |
+| `characterClass` | string                  | Race/class group identifier                            |
+| `gender`         | `"m"` \| `"f"` \| `"n"` | Character gender                                       |
+| `edition`        | string                  | Edition this character belongs to                      |
+| `handSize`       | number                  | Number of ability cards in hand                        |
+| `retireEvent`    | string                  | Event card number drawn on retirement                  |
+| `color`          | string                  | Hex color for UI display                               |
+| `stats`          | array                   | HP per level (levels 1–9)                              |
+| `perks`          | array                   | Perk definitions modifying the AM deck                 |
 
 **Perk types:** `"remove"`, `"replace"`, `"add"`, `"ignoreScenarioEffects"`, `"addItem"`.
 
@@ -193,14 +193,14 @@ Each monster file in `monster/{name}.json`:
 }
 ```
 
-| Field | Type | Description |
-|---|---|---|
-| `name` | string | Internal identifier |
-| `edition` | string | Edition identifier |
-| `deck` | string | Ability card deck name (references `monster/deck/{name}.json`) |
-| `count` | number | Number of standees |
-| `baseStat` | object | Base stat type (`normal` or `elite`) |
-| `stats` | array | Stats per level, for both normal and elite variants |
+| Field      | Type   | Description                                                    |
+| ---------- | ------ | -------------------------------------------------------------- |
+| `name`     | string | Internal identifier                                            |
+| `edition`  | string | Edition identifier                                             |
+| `deck`     | string | Ability card deck name (references `monster/deck/{name}.json`) |
+| `count`    | number | Number of standees                                             |
+| `baseStat` | object | Base stat type (`normal` or `elite`)                           |
+| `stats`    | array  | Stats per level, for both normal and elite variants            |
 
 Each stat entry for `elite` type includes `"type": "elite"`. An `actions` array on a stat entry lists special abilities (shield, retaliate, flying, etc.) active at that level.
 
@@ -243,19 +243,19 @@ Each scenario file in `scenarios/{number}.json`:
 }
 ```
 
-| Field | Type | Description |
-|---|---|---|
-| `index` | string | Scenario number (used for display and unlock tracking) |
-| `name` | string | Scenario display name |
-| `edition` | string | Edition identifier |
-| `flowChartGroup` | string | Group on the scenario flow chart |
-| `coordinates` | object | World map position |
-| `initial` | boolean | Whether this scenario is available at campaign start |
-| `unlocks` | string[] | Scenario indexes unlocked on completion |
-| `links` | string[] | Scenarios this links to (for the flow chart) |
-| `rewards` | object | XP, gold, party/global achievements awarded on completion |
-| `monsters` | string[] | Monster types that can appear in this scenario |
-| `rooms` | array | Room definitions with per-player-count monster placement |
+| Field            | Type     | Description                                               |
+| ---------------- | -------- | --------------------------------------------------------- |
+| `index`          | string   | Scenario number (used for display and unlock tracking)    |
+| `name`           | string   | Scenario display name                                     |
+| `edition`        | string   | Edition identifier                                        |
+| `flowChartGroup` | string   | Group on the scenario flow chart                          |
+| `coordinates`    | object   | World map position                                        |
+| `initial`        | boolean  | Whether this scenario is available at campaign start      |
+| `unlocks`        | string[] | Scenario indexes unlocked on completion                   |
+| `links`          | string[] | Scenarios this links to (for the flow chart)              |
+| `rewards`        | object   | XP, gold, party/global achievements awarded on completion |
+| `monsters`       | string[] | Monster types that can appear in this scenario            |
+| `rooms`          | array    | Room definitions with per-player-count monster placement  |
 
 Room monster entries support per-player-count placement using keys `"player2"`, `"player3"`, `"player4"`. A `"type"` key without player keys means the monster appears regardless of player count.
 
@@ -279,8 +279,6 @@ Label files in `label/` map internal string keys to localised display strings:
 ```
 
 Each supported language has its own file (`en.json`, `de.json`, `fr.json`, etc.). The `spoiler/` subfolder mirrors the same structure for spoiler content that is only loaded when spoilers are enabled.
-
-Translations are managed via [Weblate](https://i18n.gloomhaven-secretariat.de/).
 
 ---
 

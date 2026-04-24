@@ -169,7 +169,8 @@ export class Character extends CharacterData implements Entity, Figure {
       this.fullview,
       this.discardedAbilities || [],
       this.lostAbilities || [],
-      this.inactiveAbilities || []
+      this.inactiveAbilities || [],
+      this.selectedAbilities || []
     );
   }
 
@@ -316,6 +317,7 @@ export class Character extends CharacterData implements Entity, Figure {
     this.discardedAbilities = model.discardedAbilities || [];
     this.lostAbilities = model.lostAbilities || [];
     this.inactiveAbilities = model.inactiveAbilities || [];
+    this.selectedAbilities = model.selectedAbilities || [];
   }
 }
 
@@ -364,6 +366,7 @@ export class GameCharacterModel {
   discardedAbilities: number[];
   lostAbilities: number[];
   inactiveAbilities: number[];
+  selectedAbilities: number[];
 
   constructor(
     name: string,
@@ -409,7 +412,8 @@ export class GameCharacterModel {
     fullView: boolean,
     discardedAbilities: number[],
     lostAbilities: number[],
-    inactiveAbilities: number[]
+    inactiveAbilities: number[],
+    selectedAbilities: number[] = []
   ) {
     this.name = name;
     this.edition = edition;
@@ -455,5 +459,6 @@ export class GameCharacterModel {
     this.discardedAbilities = JSON.parse(JSON.stringify(discardedAbilities));
     this.lostAbilities = JSON.parse(JSON.stringify(lostAbilities));
     this.inactiveAbilities = JSON.parse(JSON.stringify(inactiveAbilities));
+    this.selectedAbilities = JSON.parse(JSON.stringify(selectedAbilities));
   }
 }

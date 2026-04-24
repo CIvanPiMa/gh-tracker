@@ -13,7 +13,6 @@ import { GhsLabelDirective } from 'src/app/ui/helper/label';
 import { PointerInputDirective } from 'src/app/ui/helper/pointer-input';
 import { ghsTextSearch } from 'src/app/ui/helper/Static';
 import { TabClickDirective } from 'src/app/ui/helper/tabclick';
-import { GhsTooltipDirective } from 'src/app/ui/helper/tooltip/tooltip';
 import { TrackUUIDPipe } from 'src/app/ui/helper/trackUUID';
 import { environment } from 'src/environments/environment';
 
@@ -36,7 +35,6 @@ export type SettingsTab =
     PointerInputDirective,
     TabClickDirective,
     TrackUUIDPipe,
-    GhsTooltipDirective,
     SettingMenuComponent,
     SettingMenuTitleComponent
   ],
